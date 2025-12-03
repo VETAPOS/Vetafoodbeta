@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VetaFoodBeta - Vista Ajustes</title>
+  <style>
+    body { margin: 0; font-family: 'Inter', sans-serif; background: #f7f8fc; }
+    .layout { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+    .sidebar { background: #0f172a; color: #e2e8f0; padding: 20px; }
+    .sidebar h2 { margin-top: 0; }
+    .sidebar ul { list-style: none; padding: 0; }
+    .sidebar li { margin: 10px 0; }
+    .sidebar a { color: #e2e8f0; text-decoration: none; }
+    .content { padding: 28px; }
+    .hero { background: linear-gradient(120deg, #2563eb, #1d4ed8); color: #fff; padding: 18px 20px; border-radius: 12px; margin-bottom: 16px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card { background: #fff; border-radius: 12px; border: 1px solid #e5e7eb; padding: 16px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid #e5e7eb; text-align: left; }
+    .chip { display: inline-block; padding: 4px 8px; border-radius: 999px; background: #e0e7ff; color: #1e40af; margin-right: 6px; }
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; }
+    .modal { background: #fff; padding: 18px; border-radius: 12px; width: 340px; box-shadow: 0 10px 35px rgba(0,0,0,0.12); }
+    .modal h3 { margin-top: 0; }
+    .actions { text-align: right; margin-top: 12px; }
+    button { padding: 10px 12px; border-radius: 10px; border: 1px solid #d1d5db; background: #2563eb; color: #fff; cursor: pointer; }
+    input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #d1d5db; margin-top: 6px; }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <h2>VetaFoodBeta</h2>
+      <ul>
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#" style="font-weight:bold;">Ajustes</a></li>
+        <li><a href="#">Usuarios</a></li>
+      </ul>
+    </aside>
+    <main class="content">
+      <div class="hero">
+        <h1>Ajustes</h1>
+        <p>Control total de roles, usuarios y permisos.</p>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <h3>Roles</h3>
+          <table>
+            <thead><tr><th>Nombre</th><th>Permisos</th></tr></thead>
+            <tbody>
+              <tr><td>Admin</td><td><span class="chip">settings.access</span></td></tr>
+              <tr><td>Supervisor</td><td><span class="chip">settings.access</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h3>Usuarios</h3>
+          <table>
+            <thead><tr><th>Email</th><th>Rol</th><th>PIN</th></tr></thead>
+            <tbody>
+              <tr><td>admin@veta.dev</td><td>Admin</td><td>Deshabilitado</td></tr>
+              <tr><td>supervisor@veta.dev</td><td>Supervisor</td><td>Activo</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3>Permisos por Usuario</h3>
+        <p>Overrides rápidos para permisos específicos.</p>
+        <div>
+          <label><input type="checkbox" checked disabled /> settings.access</label>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop">
+    <div class="modal">
+      <h3>Autorizar acción</h3>
+      <p>Ingresa el PIN del gerente para aprobar una cancelación.</p>
+      <input placeholder="PIN" />
+      <div class="actions">
+        <button>Confirmar</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
