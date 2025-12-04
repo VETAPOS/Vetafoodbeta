@@ -8,7 +8,16 @@ import { EditUser } from './settings/EditUser';
 import { useAuth, hasPermission } from './AuthContext';
 
 const ProtectedSettings: React.FC = () => {
-  const { permissions } = useAuth();
+  const { permissions, loading, error } = useAuth();
+
+  if (loading) {
+    return <div className="loading">Cargando sesión...</div>;
+  }
+
+  if (error) {
+    return <div className="error">No se pudo cargar la sesión: {error}</div>;
+  }
+
   if (!hasPermission(permissions, 'settings.access')) {
     return <Navigate to="/" replace />;
   }
