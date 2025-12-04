@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import { PrismaService } from '../prisma.service';
 import { SettingsService } from '../modules/settings/settings.service';
@@ -14,6 +14,13 @@ interface ApproveActionDto {
 @UseGuards(AuthGuard)
 export class AuthController {
   constructor(private readonly prisma: PrismaService, private readonly settingsService: SettingsService) {}
+
+  @Get('me')
+  async getSession(@Req() req: any) {
+    const user = await this.settingsService.getUser(req.user.companyId, req.user.id);
+    const effectivePermissions = await this.settingsService.computeEffectivePermissions(req.user.id);
+    return { ...user, effectivePermissions };
+  }
 
   @Post('approve-action')
   async approveAction(@Req() req: any, @Body() body: ApproveActionDto) {
