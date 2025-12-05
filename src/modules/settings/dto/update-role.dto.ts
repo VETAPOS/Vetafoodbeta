@@ -1,4 +1,1 @@
-export class UpdateRoleDto {
-  name?: string;
-  permissionIds?: string[];
-}
+export class UpdateRoleDto {}

@@ -1,3 +1,1 @@
-export class UpdatePinDto {
-  pin?: string;
-}
+export class UpdatePinDto {}
