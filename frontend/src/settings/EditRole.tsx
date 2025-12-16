@@ -1,3 +1,4 @@
+// Placeholder component for editing roles.
 export function EditRole() {
-  return <div>Edit role placeholder</div>;
+  return <div />;
 }

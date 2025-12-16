@@ -1,9 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 
+// Placeholder authentication controller.
 @Controller('auth')
-export class AuthController {
-  @Get('me')
-  getSession() {
-    return { message: 'Auth placeholder endpoint' };
-  }
-}
+export class AuthController {}

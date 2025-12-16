@@ -1,3 +1,4 @@
+// Placeholder component for editing users.
 export function EditUser() {
-  return <div>Edit user placeholder</div>;
+  return <div />;
 }

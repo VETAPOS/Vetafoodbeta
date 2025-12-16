@@ -1,3 +1,4 @@
+// Placeholder API helper.
 export function fetchSession() {
-  return Promise.resolve({ message: 'Auth placeholder' });
+  return Promise.resolve(null);
 }
