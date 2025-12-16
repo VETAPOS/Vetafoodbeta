@@ -1,8 +1,2 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-
-@Injectable()
-export class PermissionsGuard implements CanActivate {
-  canActivate(_context: ExecutionContext): boolean {
-    return true;
-  }
-}
+// Placeholder permissions guard.
+export class PermissionsGuard {}

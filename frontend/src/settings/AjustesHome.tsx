@@ -1,3 +1,4 @@
+// Placeholder component for ajustes home view.
 export function AjustesHome() {
-  return <div>Ajustes module placeholder</div>;
+  return <div />;
 }

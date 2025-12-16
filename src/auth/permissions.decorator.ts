@@ -1,2 +1,4 @@
 export const PERMISSION_KEY = 'requiredPermissions';
-export const Permission = (..._permissions: string[]) => (_target: any, _propertyKey?: string, _descriptor?: PropertyDescriptor) => {};
+
+// Placeholder permissions decorator.
+export const Permission = () => {};

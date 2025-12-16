@@ -1,3 +1,4 @@
+// Placeholder component for roles page.
 export function RolesPage() {
-  return <div>Roles page placeholder</div>;
+  return <div />;
 }
