@@ -1,6 +1,5 @@
-// Simple fetch client that injects headers from stored values or params
 export function getBackendUrl(){
-  return (import.meta.env.VITE_BACKEND_URL) || localStorage.getItem('backend_url') || 'http://127.0.0.1:8000'
+  return (import.meta.env.VITE_BACKEND_URL) || localStorage.getItem('backend_url') || 'http://127.0.0.1:3000'
 }
 
 export async function fetchWithHeaders(path, {companyId, userId, method='GET', body=null}={}){

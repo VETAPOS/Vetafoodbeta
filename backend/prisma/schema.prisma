@@ -1,0 +1,40 @@
+// Prisma schema for Veta backend - minimal models for Settings and Company.
+// Edit this file as the canonical DB schema. After installing dependencies run:
+//   npx prisma generate
+// and then run migrations locally (requires DATABASE_URL):
+//   npx prisma migrate dev --name init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  company_id String   @id @default(uuid())
+  name       String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  Settings   Settings?
+
+  @@map("companies")
+}
+
+model Settings {
+  settings_id         String   @id @default(uuid())
+  company_id          String   @unique
+  timezone            String   @default("America/Mexico_City")
+  currency            String   @default("MXN")
+  allow_offline       Boolean  @default(true)
+  offline_days_limit  Int      @default(3)
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+
+  company Company? @relation(fields: [company_id], references: [company_id], onDelete: Cascade)
+
+  @@map("settings")
+}

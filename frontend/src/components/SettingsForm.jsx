@@ -19,14 +19,13 @@ export default function SettingsForm({initial, onSave, saving}){
   }
 
   return (
-    <div className="card">
-      <h3>Configuración del negocio</h3>
+    <div>
       <div className="form-group">
-        <label>Timezone</label>
+        <label className="label">Timezone</label>
         <input className="input" value={timezone} onChange={e=>setTimezone(e.target.value)} />
       </div>
       <div className="form-group">
-        <label>Currency</label>
+        <label className="label">Currency</label>
         <input className="input" value={currency} onChange={e=>setCurrency(e.target.value)} />
       </div>
       <div className="form-group">
@@ -35,7 +34,7 @@ export default function SettingsForm({initial, onSave, saving}){
         </label>
       </div>
       <div className="form-group">
-        <label>Offline days limit</label>
+        <label className="label">Offline days limit</label>
         <input className="input" type="number" value={offlineDays} onChange={e=>setOfflineDays(e.target.value)} />
       </div>
       <div>

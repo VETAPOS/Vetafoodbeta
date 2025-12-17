@@ -6,7 +6,7 @@ function looksLikeUUID(v){
 }
 
 export default function IdHeaderForm({onSave}){
-  const [backendUrl, setBackendUrl] = useState(localStorage.getItem('backend_url') || import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000')
+  const [backendUrl, setBackendUrl] = useState(localStorage.getItem('backend_url') || import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:3000')
   const [companyId, setCompanyId] = useState(localStorage.getItem('company_id') || '')
   const [userId, setUserId] = useState(localStorage.getItem('user_id') || '')
   const [error, setError] = useState(null)
@@ -24,18 +24,17 @@ export default function IdHeaderForm({onSave}){
   }
 
   return (
-    <div className="card">
-      <h2>Configuración de conexión</h2>
+    <div>
       <div className="form-group">
-        <label>BACKEND URL</label>
+        <label className="label">BACKEND URL</label>
         <input className="input" value={backendUrl} onChange={e=>setBackendUrl(e.target.value)} />
       </div>
       <div className="form-group">
-        <label>company_id</label>
+        <label className="label">company_id</label>
         <input className="input" value={companyId} onChange={e=>setCompanyId(e.target.value)} placeholder="UUID" />
       </div>
       <div className="form-group">
-        <label>user_id</label>
+        <label className="label">user_id</label>
         <input className="input" value={userId} onChange={e=>setUserId(e.target.value)} placeholder="UUID" />
       </div>
       {error && <div className="error">{error}</div>}

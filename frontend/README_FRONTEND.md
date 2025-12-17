@@ -1,29 +1,45 @@
 Frontend - Configuración (v1)
 
-Qué hace
+Este repositorio contiene una interfaz mínima (React + Vite) para el módulo de Configuración del POS. El frontend es solo la capa visual: no debe contener lógica de negocio crítica.
 
-Este frontend es una interfaz mínima (React + Vite) para el módulo de Configuración. No contiene lógica de negocio: solo muestra datos y envía requests al backend.
+Estructura mínima (creada)
 
-Cómo usar
+frontend/
+  package.json
+  vite.config.js
+  index.html
+  src/
+    main.jsx
+    App.jsx
+    pages/
+      SettingsPage.jsx
+    components/
+      IdHeaderForm.jsx
+      SettingsForm.jsx
+    api/
+      client.js
+      settingsApi.js
 
-1. Copia `.env.example` a `.env` si quieres cambiar la URL del backend.
-2. Instala dependencias y corre en modo desarrollo (ejemplo):
+Conectar con el backend
 
-   npm install
-   npm run dev
+- Usa `.env` o `.env.local` con VITE_BACKEND_URL para configurar la URL del backend.
+- El frontend envía headers `X-Company-Id` y `X-User-Id` en cada petición.
 
-3. En la pantalla principal captura:
-   - BACKEND_URL (por defecto: http://127.0.0.1:8000)
-   - company_id (UUID)
-   - user_id (UUID)
+Ejecutar (local)
 
-   Presiona "Guardar" para mantener esos valores en localStorage.
+1. npm install
+2. npm run dev
 
-4. Usa "Cargar configuración" para llamar a GET /api/v1/settings?company_id=... y visualizar los campos.
-5. Edita y presiona "Guardar cambios" para hacer PATCH /api/v1/settings (el body incluye company_id).
+(No ejecutar esto en el repo hasta que instales dependencias localmente.)
 
-Notas importantes
+Ejecutar BE + FE juntos (pruebas en vivo)
 
-- El frontend usa los headers `X-Company-Id` y `X-User-Id` en cada request (toma los valores de localStorage o los que guardes en la UI).
-- Valida que `company_id` y `user_id` parezcan UUID antes de llamar al backend.
-- No genera ni maneja IDs: los IDs deben venir del backend o del usuario.
+- En la carpeta `backend/`: instala dependencias y levanta el backend:
+  - npm install
+  - npm run dev
+
+- En la carpeta `frontend/`: instala dependencias y levanta el frontend:
+  - npm install
+  - npm run dev
+
+Ambos servidores en dev (nodemon + vite) permiten iterar y ver cambios en caliente. Asegúrate de configurar `VITE_BACKEND_URL` en `frontend/.env` o usar la sección de Conexión de la UI.

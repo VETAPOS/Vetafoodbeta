@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import IdHeaderForm from '../components/IdHeaderForm'
 import SettingsForm from '../components/SettingsForm'
+import TopBar from '../components/TopBar'
+import Loader from '../components/Loader'
+import Notification from '../components/Notification'
 import { getSettings, updateSettings } from '../api/settingsApi'
 
 function looksLikeUUID(v){
@@ -10,7 +13,7 @@ function looksLikeUUID(v){
 
 export default function SettingsPage(){
   const [ids, setIds] = useState({
-    backendUrl: localStorage.getItem('backend_url')||import.meta.env.VITE_BACKEND_URL||'http://127.0.0.1:8000',
+    backendUrl: localStorage.getItem('backend_url')||import.meta.env.VITE_BACKEND_URL||'http://127.0.0.1:3000',
     companyId: localStorage.getItem('company_id')||'',
     userId: localStorage.getItem('user_id')||''
   })
@@ -52,19 +55,30 @@ export default function SettingsPage(){
   }
 
   return (
-    <div>
-      <h1>Configuración del negocio</h1>
-      <IdHeaderForm onSave={onSaveIds} />
-      <div style={{marginBottom:10}}>
-        <button className="button" onClick={loadSettings}>Cargar configuración</button>
-        {loading && <span className="loader">Cargando...</span>}
+    <div className="root">
+      <TopBar />
+      <div className="container main">
+        <aside className="sidebar card">
+          <h3>Conexión</h3>
+          <IdHeaderForm onSave={onSaveIds} />
+          <div style={{marginTop:8}}>
+            <button className="button" onClick={loadSettings}>Cargar configuración</button>
+          </div>
+          {loading && <div style={{marginTop:8}}><Loader /></div>}
+        </aside>
+
+        <main className="content">
+          <div className="card">
+            <h2>Configuración del negocio</h2>
+            {error && <Notification type="error">{error}</Notification>}
+            {settings ? (
+              <SettingsForm initial={settings} onSave={saveChanges} saving={saving} />
+            ) : (
+              <div className="muted">No hay configuración cargada. Usa "Cargar configuración".</div>
+            )}
+          </div>
+        </main>
       </div>
-      {error && <div className="error">{error}</div>}
-      {settings ? (
-        <SettingsForm initial={settings} onSave={saveChanges} saving={saving} />
-      ) : (
-        <div className="card">No hay configuración cargada.</div>
-      )}
     </div>
   )
 }
