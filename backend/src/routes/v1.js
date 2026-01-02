@@ -14,5 +14,7 @@ router.post('/bootstrap', (req, res) => {
 // Settings (GET / PATCH placeholders)
 // Delegate settings endpoints to a dedicated router
 router.use('/settings', require('./settings'));
+// Auth
+router.use('/auth', require('./auth'));
 
 module.exports = router;

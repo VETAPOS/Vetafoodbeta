@@ -14,25 +14,59 @@ datasource db {
 }
 
 model Company {
-  company_id String   @id @default(uuid())
-  name       String?
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  company_id         String   @id @default(uuid())
+  business_name      String?   @map("name")
+    phone_country_code String?
+    phone_number       String?
+  contact_name       String?
+  business_type      String?
+  onboarding_status  String   @default("STEP1_DONE")
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
 
-  Settings   Settings?
+  Users                User[]
+  Settings             Settings?
+  registrationSessions RegistrationSession[]
 
   @@map("companies")
 }
 
+model User {
+  id            String   @id @default(uuid())
+  company_id    String
+  email         String   @unique
+  password_hash String
+  role          String   @default("OWNER")
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  company Company @relation(fields: [company_id], references: [company_id], onDelete: Cascade)
+
+  @@map("users")
+}
+
+model RegistrationSession {
+  id         String    @id @default(uuid())
+  company_id String
+  token_hash String    @unique
+  expires_at DateTime
+  used_at    DateTime?
+  created_at DateTime  @default(now())
+
+  company Company @relation(fields: [company_id], references: [company_id], onDelete: Cascade)
+
+  @@map("registration_sessions")
+}
+
 model Settings {
-  settings_id         String   @id @default(uuid())
-  company_id          String   @unique
-  timezone            String   @default("America/Mexico_City")
-  currency            String   @default("MXN")
-  allow_offline       Boolean  @default(true)
-  offline_days_limit  Int      @default(3)
-  created_at          DateTime @default(now())
-  updated_at          DateTime @updatedAt
+  settings_id        String   @id @default(uuid())
+  company_id         String   @unique
+  timezone           String   @default("America/Mexico_City")
+  currency           String   @default("MXN")
+  allow_offline      Boolean  @default(true)
+  offline_days_limit Int      @default(3)
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
 
   company Company? @relation(fields: [company_id], references: [company_id], onDelete: Cascade)
 
