@@ -6,6 +6,7 @@
 .brand{font-weight:700;font-size:20px}
 .nav{display:flex;gap:12px}
 .nav-item{opacity:.95}
+.nav-item.register{background:white;color:#0f172a;padding:6px 10px;border-radius:8px}
 .main{display:flex;gap:20px}
 .card{background:white;border-radius:12px;box-shadow:0 6px 18px rgba(15,23,42,0.06);padding:18px;margin-bottom:12px}
 .sidebar{width:280px}

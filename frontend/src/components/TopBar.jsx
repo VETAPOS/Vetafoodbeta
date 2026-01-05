@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function TopBar(){
   return (
@@ -6,7 +7,8 @@ export default function TopBar(){
       <div className="container">
         <div className="brand">Veta POS</div>
         <nav className="nav">
-          <span className="nav-item">Configuración</span>
+          <Link to="/" className="nav-item">Configuración</Link>
+          <Link to="/register" className="nav-item register">Registrarse</Link>
         </nav>
       </div>
     </header>

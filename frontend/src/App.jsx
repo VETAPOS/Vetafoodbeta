@@ -1,13 +1,17 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import SettingsPage from './pages/SettingsPage'
 import RegisterPage from './pages/RegisterPage'
+import TopBar from './components/TopBar'
 
 export default function App(){
   return (
-    <div>
-      <SettingsPage />
-      <Route path="/register" element={<RegisterPage/>} />
-    </div>
+    <BrowserRouter>
+      <TopBar />
+      <Routes>
+        <Route path="/" element={<SettingsPage/>} />
+        <Route path="/register" element={<RegisterPage/>} />
+      </Routes>
+    </BrowserRouter>
   )
 }
