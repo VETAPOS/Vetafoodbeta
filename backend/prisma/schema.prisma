@@ -16,6 +16,7 @@ datasource db {
 model Company {
   company_id         String   @id @default(uuid())
   business_name      String?   @map("name")
+  contact_email      String?
     phone_country_code String?
     phone_number       String?
   contact_name       String?

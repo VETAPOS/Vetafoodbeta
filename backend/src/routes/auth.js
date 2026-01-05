@@ -15,6 +15,7 @@ router.post('/register/step1', async (req, res) => {
 
     try{
       const out = await step1CreateCompanyAndOwner({ business_name, email, phone_country_code, phone_number, password });
+      // Return admin_email so frontend can show/record it if needed
       return res.status(201).json(out);
     }catch(err){
       if(err.code === 'EMAIL_EXISTS') return res.status(409).json({ error: 'email already exists' });

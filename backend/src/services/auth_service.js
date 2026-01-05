@@ -11,25 +11,50 @@ function hashToken(token){
 async function step1CreateCompanyAndOwner({ business_name, email, phone_country_code, phone_number, password }){
   if(!isPrismaReady) throw new Error('Prisma not available');
 
-  // validate uniqueness of email
-  const existing = await prisma.user.findUnique({ where: { email } }).catch(()=>null);
-  if(existing) {
-    const err = new Error('Email already exists');
-    err.code = 'EMAIL_EXISTS';
-    throw err;
+  // We will store the provided contact email on Company (contact_email) but
+  // generate a dedicated admin email for the user: admin@<normalized-business-name>
+  // Normalization: remove accents, lowercase, replace non-alphanum with dash, trim dashes.
+  function normalizeName(name){
+    if(!name) return '';
+    // remove accents
+    const s = name.normalize('NFD').replace(/\p{Diacritic}/gu, '');
+    // to lower, replace non-alnum with dash, collapse dashes
+    return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').replace(/-+/g, '-');
   }
 
+  const base = normalizeName(business_name) || 'company';
+  const adminPrefix = `admin@${base}`;
+
   return await prisma.$transaction(async (tx) => {
+    // create company record, keep contact email separately
     const company = await tx.company.create({ data: {
       business_name,
+      contact_email: email,
       phone_country_code,
       phone_number
     }});
 
+    // find existing admin emails that start with admin@<base>
+    const existingAdmins = await tx.user.findMany({ where: { email: { startsWith: adminPrefix } }, select: { email: true } });
+
+    // Determine unique admin email: if none exists, use admin@base, otherwise append a numeric suffix
+    let adminEmail = adminPrefix;
+    if(existingAdmins.length > 0){
+      // collect suffixes
+      const nums = existingAdmins.map(u => {
+        const part = u.email.slice(adminPrefix.length);
+        if(!part) return 0; // exact match
+        const m = part.match(/^([0-9]+)$/);
+        return m ? parseInt(m[1],10) : 0;
+      });
+      const max = Math.max(0, ...nums);
+      adminEmail = adminPrefix + String(max + 1);
+    }
+
     const password_hash = await bcrypt.hash(password, 10);
     const user = await tx.user.create({ data: {
       company_id: company.company_id,
-      email,
+      email: adminEmail,
       password_hash,
       role: 'OWNER'
     }});
@@ -45,7 +70,7 @@ async function step1CreateCompanyAndOwner({ business_name, email, phone_country_
       expires_at
     }});
 
-    return { company_id: company.company_id, registration_token: token };
+    return { company_id: company.company_id, registration_token: token, admin_email: adminEmail };
   });
 }
 

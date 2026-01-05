@@ -15,7 +15,7 @@ async function main(){
   };
 
   console.log('STEP1 body', step1Body);
-  let res = await fetch(`${BACKEND}/api/auth/register/step1`, { method: 'POST', body: JSON.stringify(step1Body), headers: { 'Content-Type': 'application/json' }});
+  let res = await fetch(`${BACKEND}/api/v1/auth/register/step1`, { method: 'POST', body: JSON.stringify(step1Body), headers: { 'Content-Type': 'application/json' }});
   console.log('STEP1 status', res.status);
   const data = await res.json();
   console.log('STEP1 resp', data);
@@ -24,7 +24,7 @@ async function main(){
   const { company_id, registration_token } = data;
 
   const step2Body = { company_id, contact_name: 'Isaac Velazco', business_type: 'RESTAURANTE_QSR' };
-  res = await fetch(`${BACKEND}/api/auth/register/step2`, { method: 'POST', body: JSON.stringify(step2Body), headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + registration_token }});
+  res = await fetch(`${BACKEND}/api/v1/auth/register/step2`, { method: 'POST', body: JSON.stringify(step2Body), headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + registration_token }});
   console.log('STEP2 status', res.status);
   console.log('STEP2 resp', await res.json());
 }
